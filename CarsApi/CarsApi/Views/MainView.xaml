@@ -1,0 +1,430 @@
+﻿<Window x:Class="CarsApi.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarsApi"
+        xmlns:vm="clr-namespace:CarsApi.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200">
+
+    <Window.DataContext>
+        <vm:MainViewModel></vm:MainViewModel>
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary
+            Source="Styles/StyleDark.xaml"></ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button
+                FontSize="25"
+                Content="List Brands"
+                Command="{Binding GetListBrandsCommand}"></Button>
+
+            <Button
+                Grid.Row="1"
+                FontSize="25"
+                Content="Toyota"
+                Command="{Binding GetModelsToyotaCommand}"></Button>
+
+            <Grid
+                x:Name="GridBrands"
+                Grid.Row="1"
+                Grid.Column="1"
+                Visibility="{Binding VisibilityGridBrands}">
+                <ListBox
+                ItemsSource="{Binding Brands}"
+                SelectedItem="{Binding SelectedBrand}"
+                Background="Gray"
+                FontSize="30">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style
+                            TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver" Value="True">
+                                    <Setter Property="IsSelected" Value="True"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <TextBlock
+                                Text="{Binding Name}"></TextBlock>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <Grid
+                x:Name="GridToyotaModels"
+                Grid.Row="1"
+                Grid.Column="1"
+                Visibility="{Binding VisibilityGridToyotaModes}">
+                <ListBox
+                    ItemsSource="{Binding ToyotaModels}"
+                    SelectedItem="{Binding SelectedToyotaInfoModel}">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style
+                            TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver" Value="True">
+                                    <Setter Property="IsSelected" Value="True"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="2">
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="5"
+                                        Width="400"
+                                        FontSize="30"
+                                        Text="{Binding Name}"></TextBlock>
+                                    <ListBox
+                                        ItemsSource="{Binding ModelCars}"
+                                        SelectedItem="{Binding
+                                        ElementName=ListBoxSelectedToyotaModel,
+                                        Path=SelectedItem}">
+                                        
+                                        <ListBox.ItemContainerStyle>
+                                            <Style
+                                                TargetType="ListBoxItem">
+                                                <Style.Triggers>
+                                                    <Trigger
+                                                        Property="IsMouseOver" Value="True">
+                                                        <Setter Property="IsSelected" Value="True"></Setter>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                        
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel
+                                                    Orientation="Horizontal"
+                                                    Width="1000">
+                                                    <Button
+                                                        FontSize="25"
+                                                        Margin="5"
+                                                        Content="{Binding Code}"
+                                                        Command="{Binding
+                                                        ElementName=BtnViewModelToyota,
+                                                        Path=Command}"></Button>
+                                                    <TextBlock
+                                                        Margin="5"
+                                                        FontSize="25"
+                                                        Text="{Binding Date}"></TextBlock>
+                                                    <TextBlock
+                                                        Margin="5"
+                                                        FontSize="25"
+                                                        Text="{Binding Equipment}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+
+                <ListBox
+                    x:Name="ListBoxSelectedToyotaModel"
+                    Visibility="Hidden"
+                    SelectedItem="{Binding SelectedToyotaModel}">
+                </ListBox>
+                <Button
+                    x:Name="BtnViewModelToyota"
+                    Visibility="Hidden"
+                    Command="{Binding GetViewEquipmentsModelCommand}"></Button>
+            </Grid>
+
+            <Grid
+                x:Name="GridToyotaModelEquipments"
+                Grid.Row="1"
+                Grid.Column="1"
+                Visibility="{Binding VisibilityGridToyotaModeEquipments}">
+                
+                <ListBox
+                    ItemsSource="{Binding ToyotaModelEquipments}"
+                    SelectedItem="{Binding SelectedToyotaModelEquipment}">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style
+                            TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver" Value="True">
+                                    <Setter Property="IsSelected" Value="True"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    
+                                    <StackPanel.Resources>
+                                        <Style
+                                            TargetType="TextBlock">
+                                            <Setter
+                                                Property="FontSize"
+                                                Value="25"></Setter>
+                                            <Setter
+                                                Property="Width"
+                                                Value="200"></Setter>
+                                        </Style>
+                                    </StackPanel.Resources>
+
+                                    <TextBlock
+                                        Text="{Binding ComponentCod}"></TextBlock>
+                                    <Button
+                                        Width="250"
+                                        Command="{Binding
+                                        ElementName=BtnGetGroupsEquipment,
+                                        Path=Command}"
+                                        Content="{Binding Name}"></Button>
+                                    <TextBlock
+                                        Width="250"
+                                        Text="{Binding Date}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding Engine}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding Body}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding Grade}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding Transmission}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding GearShift}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding DriverPosition}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding NumOfDoor}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding Destination1}"></TextBlock>
+                                    <TextBlock
+                                        Text="{Binding Destination2}"></TextBlock>
+                                    
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    
+                </ListBox>
+
+                <Button
+                    x:Name="BtnGetGroupsEquipment"
+                    Visibility="Hidden"
+                    Command="{Binding GetGroupsEquipmentCommand}"></Button>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                x:Name="GridGroupsEquipment"
+                Visibility="{Binding VisibilityGridGroupsEquipment}">
+
+                <ListBox
+                    ItemsSource="{Binding GroupsEquipment}"
+                    SelectedItem="{Binding SelectedGroupEquipment}">
+                    
+                    <ListBox.ItemContainerStyle>
+                        <Style
+                            TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver" Value="True">
+                                    <Setter Property="IsSelected" Value="True"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <WrapPanel>
+                                    <TextBlock
+                                            Text="{Binding GroupId}"></TextBlock>
+                                    <Button
+                                            Content="{Binding Name}"
+                                            Command="{Binding
+                                            ElementName=BtnComplectationsGroup,
+                                            Path=Command}"
+                                            FontSize="30"
+                                            Width="500"></Button>
+                                </WrapPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+
+                <Button
+                    x:Name="BtnComplectationsGroup"
+                    Command="{Binding GetComplectationsGroupCommand}"
+                    Visibility="Hidden"></Button>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                x:Name="GridComplectationsGroup"
+                Visibility="{Binding VisibilityGridComplectationsGroup}">
+
+                <ListBox
+                    ItemsSource="{Binding ComplectationsGroup}"
+                    SelectedItem="{Binding SelectedComplectationGroup}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style
+                            TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver" Value="True">
+                                    <Setter Property="IsSelected" Value="True"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Width="350"
+                                Margin="5">
+                                <StackPanel>
+                                    <StackPanel>
+                                        <Image
+                                            Source="{Binding Image}"
+                                            Height="330"
+                                            Stretch="Uniform"
+                                            ></Image>
+                                        <Button
+                                            Content="{Binding Name}"
+                                            FontSize="20"
+                                            Width="350"
+                                            Command="{Binding
+                                            ElementName=BtnPartsComplection,
+                                            Path=Command}"></Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    
+                </ListBox>
+
+                <Button
+                    x:Name="BtnPartsComplection"
+                    Visibility="Hidden"
+                    Command="{Binding GetPartsComplectationCommand}"></Button>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                x:Name="GridPartsComplectation"
+                Visibility="{Binding VisibilityGridPartsComplectation}">
+
+                <ListBox
+                    ItemsSource="{Binding PartsComplectation}"
+                    SelectedItem="{Binding SelectedPartComplectation}">
+
+                    <ListBox.ItemContainerStyle>
+                        <Style
+                            TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <Trigger
+                                    Property="IsMouseOver" Value="True">
+                                    <Setter Property="IsSelected" Value="True"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontSize="20"
+                                        Width="100"
+                                        Text="{Binding TreeCode}"></TextBlock>
+                                    <TextBlock
+                                        FontSize="20"
+                                        Width="500"
+                                        Text="{Binding Tree}"></TextBlock>
+                                    <ListBox
+                                        Width="1000"
+                                        FontSize="20"
+                                        ItemsSource="{Binding PartsComplectation}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel
+                                                    Orientation="Horizontal">
+                                                    <TextBlock
+                                                        Text="{Binding Code}"></TextBlock>
+                                                    <TextBlock
+                                                        Text="{Binding Count}"></TextBlock>
+                                                    <TextBlock
+                                                        Text="{Binding Date}"></TextBlock>
+                                                    <TextBlock
+                                                        Text="{Binding Info}"></TextBlock>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+                
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Window>

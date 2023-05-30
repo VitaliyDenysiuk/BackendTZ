@@ -1,0 +1,94 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style
+        TargetType="Canvas">
+        <Setter
+            Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush>
+                    <GradientStop Color="Gray"></GradientStop>
+                    <GradientStop Color="DarkGray"></GradientStop>
+                    <GradientStop Color="DarkSlateGray"></GradientStop>
+                    <GradientStop Color="DimGray"></GradientStop>
+                    <GradientStop Color="LightGray"></GradientStop>
+                    <GradientStop Color="LightSlateGray"></GradientStop>
+                    <GradientStop Color="Gray"></GradientStop>
+                    <GradientStop Color="SlateGray"></GradientStop>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        TargetType="Grid">
+        <Setter
+            Property="Background"
+            Value="Gray">
+        </Setter>
+    </Style>
+    <Style
+        TargetType="StackPanel">
+        <Setter
+            Property="Background"
+            Value="Gray">
+        </Setter>
+    </Style>
+    <Style
+        TargetType="ListBox">
+        <Setter
+            Property="Background"
+            Value="DimGray">
+        </Setter>
+        <Setter
+            Property="Foreground"
+            Value="LightGray">
+        </Setter>
+    </Style>
+    <Style
+        TargetType="Button">
+        <Setter
+            Property="Background"
+            Value="#1b1b21">
+        </Setter>
+        <Setter
+            Property="Foreground"
+            Value="White">
+        </Setter>
+        <Style.Triggers>
+            <Trigger 
+                Property="IsMouseOver"
+                Value="True">
+                <Setter
+                    Property="Foreground"
+                    Value="Black"></Setter>
+                <Setter
+                    Property="Opacity"
+                    Value="0.5"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        TargetType="TextBox">
+        <Setter
+            Property="Background"
+            Value="DimGray">
+        </Setter>
+        <Setter
+            Property="Foreground"
+            Value="LightGray">
+        </Setter>
+    </Style>
+    <Style
+        TargetType="Border">
+        <Setter
+            Property="BorderBrush"
+            Value="DarkBlue">
+        </Setter>
+        <Setter
+            Property="BorderThickness"
+            Value="2">
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>
